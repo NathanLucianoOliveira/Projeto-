@@ -1,42 +1,50 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Text, TextInput, View, StyleSheet, TouchableOpacity, Alert, Image } from 'react-native';
-import { StackTypes } from '../../routes/stack';
-import UserService from '../../services/UserService/UserService';
+import { useNavigation } from "@react-navigation/native";
+import React, { useState } from "react";
+import {
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Pressable,
+} from "react-native";
+import { StackTypes } from "../../routes/stack";
+import UserService from "../../services/UserService/UserService";
+import { Feather } from "@expo/vector-icons";
 
 const Cadastro = () => {
-  const [email, setEmail] = useState<string>('');
-  const [nome, setNome] = useState<string>('');
-  const [sobrenome, setSobrenome] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [nome, setNome] = useState<string>("");
+  const [sobrenome, setSobrenome] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [usernameError, setUsernameError] = useState(false);
-
+  const [hidePassword, setHidePassword] = useState(true);
   const userService = new UserService();
 
   const navigation = useNavigation<StackTypes>();
 
   const handleNavegarLogin = () => {
-    navigation.navigate('Login');
+    navigation.navigate("Login");
   };
 
   const handleLogin = async () => {
-
     const user = await userService.addUser({
       email,
       firstName: nome,
       lastName: sobrenome,
       password,
-      username: '',
+      username: "",
     });
 
     if (user) {
-      alert('Usuário autenticado com sucesso ' + nome);
-      setEmail('');
-      setPassword('');
-      setNome('');
-      setSobrenome('');
+      alert("Usuário autenticado com sucesso " + nome);
+      setEmail("");
+      setPassword("");
+      setNome("");
+      setSobrenome("");
     } else {
-      alert('Usuário e/ou senha inválidos');
+      alert("Usuário e/ou senha inválidos");
     }
   };
 
@@ -44,10 +52,9 @@ const Cadastro = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Cadastro</Text>
       <Image
-    style={styles.imageStyle}
-    source={require('../../../assets/coelhinho2.png')}
-  />
-
+        style={styles.imageStyle}
+        source={require("../../../assets/coelhinho2.png")}
+      />
 
       <TextInput
         style={[styles.input, usernameError && styles.errorInput]}
@@ -67,17 +74,43 @@ const Cadastro = () => {
         onChangeText={setEmail}
         value={email}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={setPassword}
-        value={password}
-      />
-      <TouchableOpacity onPress={handleLogin} style={styles.button} activeOpacity={0.1}>
+      <View style={{ flexDirection: "row" }}>
+        <TextInput
+          style={{
+            ...styles.input,
+            width: "70%",
+            marginRight: 10,
+          }}
+          placeholder="Password"
+          secureTextEntry={!hidePassword}
+          onChangeText={setPassword}
+          value={password}
+        />
+        <Pressable
+          onPress={() => setHidePassword((prev) => !prev)}
+          style={{
+            marginTop: 10,
+          }}
+        >
+          {hidePassword ? (
+            <Feather name="eye" size={24} />
+          ) : (
+            <Feather name="eye-off" size={24} />
+          )}
+        </Pressable>
+      </View>
+      <TouchableOpacity
+        onPress={handleLogin}
+        style={styles.button}
+        activeOpacity={0.1}
+      >
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleNavegarLogin} style={styles.button} activeOpacity={0.1}>
+      <TouchableOpacity
+        onPress={handleNavegarLogin}
+        style={styles.button}
+        activeOpacity={0.1}
+      >
         <Text style={styles.buttonText}>Ir para login</Text>
       </TouchableOpacity>
     </View>
@@ -87,40 +120,40 @@ const Cadastro = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#EEDBB5', 
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#EEDBB5",
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#37474F', // Um azul escuro acinzentado para o título
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "#37474F", // Um azul escuro acinzentado para o título
+    textAlign: "center",
     marginTop: 20, // Aumente este valor conforme necessário para descer o texto
   },
   input: {
-    width: '80%',
+    width: "80%",
     height: 50,
-    borderColor: '#D3A46F', 
-    backgroundColor: '#FFFAF2', 
+    borderColor: "#D3A46F",
+    backgroundColor: "#FFFAF2",
     borderRadius: 20,
     marginBottom: 20,
     paddingHorizontal: 15,
     fontSize: 16,
-    color: '#5C3A21', 
+    color: "#5C3A21",
   },
   errorInput: {
-    borderColor: '#D96C6C', 
+    borderColor: "#D96C6C",
   },
   button: {
-    width: '80%',
+    width: "80%",
     height: 50,
     borderRadius: 20,
-    backgroundColor: '#C17C54', 
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#C17C54",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 10,
-    shadowColor: '#2D2926', 
+    shadowColor: "#2D2926",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -130,21 +163,19 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   buttonText: {
-    color: '#FFF7EB', 
+    color: "#FFF7EB",
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 
   imageStyle: {
     width: 120, // Tamanho aumentado para que a imagem seja mais destacada
     height: 120, // Tamanho aumentado para que a imagem seja mais destacada
     borderRadius: 60, // Metade da largura/altura para manter a forma circular
-    alignSelf: 'center',
+    alignSelf: "center",
     marginTop: 5, // Aumente esta margem para diminuir a proximidade com o texto "Login"
     marginBottom: 20, // Adicionado para dar espaço antes dos campos de entrada
   },
-
-
 });
 
 export default Cadastro;
