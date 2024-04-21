@@ -9,7 +9,15 @@ const Home = () => {
   return (
     <Layout>
       <View>
-        <Text>Estou na Home</Text>
+        <Text
+          style={{
+            fontSize: 40,
+            textAlign: "center",
+            marginTop: 20,
+          }}
+        >
+          Bem vindo
+        </Text>
       </View>
     </Layout>
   );

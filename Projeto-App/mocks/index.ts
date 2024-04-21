@@ -1,11 +1,12 @@
 import { fakerPT_BR as faker } from "@faker-js/faker";
 
-export const grupos = () =>
-  faker.helpers.multiple(gerarGrupo, {
+export function grupos() {
+  return faker.helpers.multiple(gerarGrupo, {
     count: faker.number.int({ min: 5, max: 10 }),
   });
+}
 
-function gerarGrupo(): IGrupo {
+export function gerarGrupo(): IGrupo {
   return {
     id: faker.string.uuid(),
     nome: faker.company.name(),
@@ -19,6 +20,27 @@ function gerarGrupo(): IGrupo {
     }),
     dataRevelacao: faker.date.future(),
   };
+}
+
+export function convites() {
+  return faker.helpers.multiple(gerarConvite, {
+    count: faker.number.int({ min: 10, max: 20 }),
+  });
+}
+
+export function gerarConvite(): IConvite {
+  return {
+    id: faker.string.uuid(),
+    codigo: faker.number.int({ min: 11111, max: 9999999 }).toString(),
+    grupoId: faker.string.uuid(),
+  };
+}
+
+export interface IConvite {
+  id: string;
+  codigo: string;
+  grupoId: string;
+  grupo?: IGrupo;
 }
 
 export interface IGrupo {

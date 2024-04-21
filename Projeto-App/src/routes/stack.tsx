@@ -9,6 +9,9 @@ import Login from "../screens/Login";
 import Cadastro from "../screens/Cadastro";
 import EsqueceuSenha from "../screens/EsqueceuSenha";
 import { Grupo } from "../screens/Grupo";
+import { CriarGrupo } from "../screens/CriarGrupo";
+import { EditarGrupo } from "../screens/Editar Grupo";
+import { Convite } from "../screens/Convites";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +21,9 @@ type StackNavigation = {
   Cadastro: undefined;
   EsqueceuSenha: undefined;
   Grupo: undefined;
+  CriarGrupo: undefined;
+  EditarGrupo: { id: string };
+  Convites: { id: string };
   Perfil: undefined;
 };
 
@@ -43,6 +49,15 @@ export default function StackComponent() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Grupo" component={Grupo} />
+        <Stack.Screen
+          name="CriarGrupo"
+          component={CriarGrupo}
+          options={{
+            headerTitle: "Criar Grupo",
+          }}
+        />
+        <Stack.Screen name="EditarGrupo" component={EditarGrupo} />
+        <Stack.Screen name="Convites" component={Convite} />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>

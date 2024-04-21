@@ -1,12 +1,25 @@
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { Layout } from "../../Layouts/Layout";
 import { IGrupo, grupos } from "../../../mocks";
+import { useNavigation } from "@react-navigation/native";
+import { StackTypes } from "../../routes/stack";
+import { Ionicons } from "@expo/vector-icons";
 
 export function Grupo() {
+  const navigation = useNavigation<StackTypes>();
   return (
     <Layout>
       <View>
-        <Text>Grupos</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            margin: 10,
+          }}
+        >
+          <Text>Grupos</Text>
+          <Text onPress={() => navigation.push("CriarGrupo")}>Criar Grupo</Text>
+        </View>
         <FlatList
           data={grupos()}
           renderItem={({ item }) => <Card grupo={item} />}
@@ -17,6 +30,7 @@ export function Grupo() {
   );
 }
 const Card = ({ grupo }: { grupo: IGrupo }) => {
+  const navigation = useNavigation<StackTypes>();
   return (
     <View style={styles.card}>
       <View style={styles.imageContainer}>
@@ -34,6 +48,20 @@ const Card = ({ grupo }: { grupo: IGrupo }) => {
           <Text style={styles.quantidade}>
             Quantidade Máxima: {grupo.quantidadeMaxima}
           </Text>
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Ionicons
+            name="create"
+            size={28}
+            color="blue"
+            onPress={() => navigation.push("EditarGrupo", { id: grupo.id })}
+          />
+          <Ionicons
+            name="mail"
+            size={28}
+            color="green"
+            onPress={() => navigation.push("Convites", { id: grupo.id })}
+          />
         </View>
       </View>
     </View>
@@ -53,6 +81,12 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "100%",
     flexDirection: "row", // Alinha os itens horizontalmente
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "100%",
+    marginTop: 10,
   },
   imageContainer: {
     width: 100, // Ajuste o tamanho conforme necessário
