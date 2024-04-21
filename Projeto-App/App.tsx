@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import theme from './src/styles/theme';
-import StackComponent from './src/routes/stack';
+import { StyleSheet } from "react-native";
+import theme from "./src/styles/theme";
+import StackComponent from "./src/routes/stack";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function App() {
-
   return (
-   <StackComponent />
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <StackComponent />
+    </GestureHandlerRootView>
   );
 }
 
@@ -15,20 +15,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.white,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
-  text:{
-    fontSize:24
+  text: {
+    fontSize: 24,
   },
-  textInput:{
+  textInput: {
     borderColor: theme.colors.red,
     borderWidth: 1,
     borderRadius: 5,
     fontSize: 24,
-    width:300,
+    width: 300,
     paddingTop: 10,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   button: {
     backgroundColor: theme.colors.blue,
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: theme.colors.white,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
